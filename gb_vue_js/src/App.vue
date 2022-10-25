@@ -99,14 +99,17 @@ export default {
 
     addNumber(number) {
       if (this[this.inputForInter] || number != 0) {
-        this[this.inputForInter] = (this[this.inputForInter] == 0)
+        let result = (this[this.inputForInter] == 0)
           ? number
           : this[this.inputForInter] + number;
+
+        this[this.inputForInter] = Number(result);
       }
     },
 
     clearLastNumber() {
-      this[this.inputForInter] = String(this[this.inputForInter]).slice(0, -1);
+      let result = String(this[this.inputForInter]).slice(0, -1);
+      this[this.inputForInter] = Number(result);
     }
   }
 }
