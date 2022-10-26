@@ -12,7 +12,7 @@
 
     <div class="calc__keyboard">
       <div class="calc__keyboard_operators">
-        <button class="calc__keyboard_operators__item" v-for="(item, index) in operators" :key="index" @click="setOperator(item)">{{ item }}</button>
+        <button class="calc__keyboard_operators__item" v-for="(item, index) in operators" :name="item" :key="index" @click="setOperator(item)">{{ item }}</button>
       </div>
 
       <div class="calc__keyboard_numbers">
@@ -31,8 +31,8 @@
           </div>
 
           <div class="calc__keyboard_numbers_group">
-            <button class="calc__keyboard_numbers__item" v-for="(number, index) in numbers" :key="index" @click="addNumber(number)">{{number}}</button>
-            <button class="calc__keyboard_numbers__item" @click="clearLastNumber">
+            <button class="calc__keyboard_numbers__item" v-for="(number, index) in numbers" :name="number" :key="index" @click="addNumber(number)">{{number}}</button>
+            <button class="calc__keyboard_numbers__item" name="clear" @click="clearLastNumber">
               <svg id="Layer_1" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m21 2h-13.24l-7.76 10 7.76 10h13.24a3 3 0 0 0 3-3v-14a3 3 0 0 0 -3-3zm1 17a1 1 0 0 1 -1 1h-12.26l-6.2-8 6.2-8h12.26a1 1 0 0 1 1 1zm-4.043-9.543-2.543 2.543 2.543 2.543-1.414 1.414-2.543-2.543-2.543 2.543-1.414-1.414 2.543-2.543-2.543-2.543 1.414-1.414 2.543 2.543 2.543-2.543z"/></svg>
             </button>
           </div>
@@ -99,12 +99,17 @@ export default {
 
     addNumber(number) {
       if (this[this.inputForInter] || number != 0) {
-        this[this.inputForInter] += number;
+        let result = (this[this.inputForInter] == 0)
+          ? number
+          : this[this.inputForInter] + number;
+
+        this[this.inputForInter] = Number(result);
       }
     },
 
     clearLastNumber() {
-      this[this.inputForInter] = String(this[this.inputForInter]).slice(0, -1);
+      let result = String(this[this.inputForInter]).slice(0, -1);
+      this[this.inputForInter] = Number(result);
     }
   }
 }
